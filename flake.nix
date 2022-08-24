@@ -9,7 +9,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        package-name = "nonstdlib";
+        package-name = "nonstdlib.sh";
         run-dependencies = with pkgs; [];
       in rec {
         devShell = pkgs.mkShell {
@@ -19,14 +19,10 @@
           ];
         };
 
-        defaultPackage = with import nixpkgs {inherit system; };
-        stdenv.mkDerivation {
+        defaultPackage = pkgs.writeShellApplication {
           name = package-name;
-          src = self;
-          installPhase = ''
-            mkdir -p $out/bin;
-            install --target-directory $out/bin $name;
-            '';
+          runtimeInputs = run-dependencies;
+          text = (builtins.readFile ./${package-name});
         };
       });
 }
