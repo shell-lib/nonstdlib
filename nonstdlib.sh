@@ -2,8 +2,12 @@
 
 # Define return codes
 SUCCESS=0
+export SUCCESS
 FAILURE=1
+export FAILURE
 USAGE_ERROR=2
+export USAGE_ERROR
+
 
 # Define this function first so that we may call it immediatly
 function source_guard()
