@@ -19,5 +19,13 @@ function source_guard()
 source_guard
 
 
+function exec_guard()
+{
+  # '-ef' Checks that both files have the same device and inode numbers
+  if [[ ! "${BASH_SOURCE[0]}" -ef "$0" ]]; then
+    echo "This script may only be ran, not sourced"
+    return "${USAGE_ERROR}"
+  fi
+}
 
 
